@@ -2,7 +2,11 @@ import Header from "./components/Header";
 import "./index.css";
 import Tasks from "./components/Tasks"
 import AddTasks from "./components/AddTask"
+import Footer from "./components/Footer"
+import About from "./components/About"
 import { useState, useEffect } from "react"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+
 
 function App() {
 
@@ -24,14 +28,14 @@ function App() {
 
   //Fetch Tasks
   const fetchTasks = async () =>{
-    const res = await fetch("http://192.168.43.120:5000/tasks")
+    const res = await fetch("http://localhost:5000/tasks")
     const data = await res.json()
     return data
   }
 
   //Fecth a Task
   const fetchTask = async (id) =>{
-    const res = await fetch(`http://192.168.43.120:5000/tasks/${id}`)
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
     const data = await res.json()
     return data
   }
@@ -40,7 +44,7 @@ function App() {
 
   //Delete task
   const deleteTask =  async (id) => {
-    await fetch(`http://192.168.43.120:5000/tasks/${id}`,{
+    await fetch(`http://localhost:5000/tasks/${id}`,{
       method: 'DELETE'
     }
     )
@@ -51,7 +55,7 @@ function App() {
   //Add Task
   const addTask = async (task)=>{
 
-    const res = await fetch("http://192.168.43.120:5000/tasks",{
+    const res = await fetch("http://localhost:5000/tasks",{
       method:'POST',
       headers: {
         "Content-type": "application/json"
@@ -77,7 +81,7 @@ function App() {
     const updatedTask = {...taskToToggle,
     reminder: !taskToToggle.reminder}
 
-    const res = await fetch(`http://192.168.43.120:5000/tasks/${id}`,{
+    const res = await fetch(`http://localhost:5000/tasks/${id}`,{
       method: "PUT",
       headers: {
         "Content-type":"application/json"
@@ -93,14 +97,29 @@ function App() {
 
 
   return (
+    <Router>
     <div className="container">
       <Header onAdd={() => setshowAddTask(!showAddTask) } showAddTask={showAddTask} />
-      {showAddTask && <AddTasks onAdd={addTask}/>}
-      {tasks.length >0 ? 
-      <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/> 
-      : "No Tasks To Show"}
+      
+
+      
+      <Route path="/" exact render={(props) =>(
+        <>
+              {showAddTask && <AddTasks onAdd=
+      {addTask}/>}
+      {tasks.length >0 ? (
+      <Tasks tasks={tasks} 
+      onDelete={deleteTask} 
+      onToggle={toggleReminder}/> )
+      : ("No Tasks To Show")}
+
+        </>
+      )}/>
+      <Route path="/about" component={About}/>
+      <Footer />
       
     </div>
+    </Router>
   );
 }
 

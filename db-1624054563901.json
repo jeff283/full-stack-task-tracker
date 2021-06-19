@@ -21,7 +21,7 @@
     {
       "text": "Do assignment",
       "day": "Next week",
-      "reminder": false,
+      "reminder": true,
       "id": 4
     }
   ]
