@@ -28,7 +28,7 @@ function App() {
 
   //Fetch Tasks
   const fetchTasks = async () =>{
-    const res = await fetch("http://localhost:5000/task") 
+    const res = await fetch("https://linvertasktracker.herokuapp.com/task") 
     const data = await res.json()
     // console.log(data)
     return data
@@ -36,7 +36,7 @@ function App() {
 
   //Fecth a Task
   const fetchTask = async (id) =>{
-    const res = await fetch(`http://localhost:5000/task/${id}`)
+    const res = await fetch(`https://linvertasktracker.herokuapp.com/task/${id}`)
     const data = await res.json()
     return data
   }
@@ -45,7 +45,7 @@ function App() {
 
   //Delete task
   const deleteTask =  async (id) => {
-    await fetch(`http://localhost:5000/task/${id}`,{
+    await fetch(`https://linvertasktracker.herokuapp.com/task/${id}`,{
       method: 'DELETE'
     }
     )
@@ -56,7 +56,7 @@ function App() {
   //Add Task
   const addTask = async (task)=>{
 
-    const res = await fetch("http://localhost:5000/task",{
+    const res = await fetch("https://linvertasktracker.herokuapp.com/task",{
       method:'POST',
       headers: {
         "Content-type": "application/json"
@@ -82,7 +82,7 @@ function App() {
     const updatedTask = {...taskToToggle,
     reminder: !taskToToggle.reminder}
 
-    const res = await fetch(`http://localhost:5000/task/${id}`,{
+    const res = await fetch(`https://linvertasktracker.herokuapp.com/task/${id}`,{
       method: "PUT",
       headers: {
         "Content-type":"application/json"
